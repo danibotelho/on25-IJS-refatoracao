@@ -1,0 +1,11 @@
+.principal{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 300px;
+}
+
+.botao-start{
+    cursor: pointer;
+    /* outras propriedades CSS aqui */
+  }

@@ -4,12 +4,15 @@ class GoldAccount extends Account {
   transactionLimit;
   
   constructor() {
+    const limit = 5000
     super();
-    this.transactionLimit = 5000;
+    this.transactionLimit = limit;
   }
 
   createAccount(accountNumber, agency, balance, income) {
-    if (income < 5000 || income > 17999.99) {
+    const minLimit = 5000
+    const maxLimit = 17999.99
+    if (income < minLimit || income > maxLimit) {
       throw new Error("Renda incompatível com o tipo de conta")
     }
     if (accountNumber.length === 5 && agency.length === 4 && balance > 0) {

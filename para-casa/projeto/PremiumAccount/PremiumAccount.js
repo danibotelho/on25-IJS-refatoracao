@@ -8,7 +8,8 @@ class PremiumAccount extends Account {
   }
 
   createAccount(accountNumber, agency, balance, income) {
-    if (income < 18000) {
+    const limit = 18000
+    if (income < limit) {
       throw new Error("Renda incompatível com o tipo de conta")
     }
     if (accountNumber.length === 5 && agency.length === 4 && balance > 0) {

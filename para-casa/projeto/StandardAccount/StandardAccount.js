@@ -4,12 +4,14 @@ class StandardAccount extends Account {
   transactionLimit;
   
   constructor() {
+    const limit = 1000
     super();
-    this.transactionLimit = 1000;
+    this.transactionLimit = limit;
   }
 
   createAccount(accountNumber, agency, balance, income) {
-    if (income > 4999) {
+    const maxLimit = 4999
+    if (income > maxLimit) {
       throw new Error("Renda incompatível com o tipo de conta")
     }
     if (accountNumber.length === 5 && agency.length === 4 && balance > 0) {

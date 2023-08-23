@@ -133,7 +133,7 @@ class Account {
     })
 
     if (!validAccount) {
-      throw new Error("Conta não encontrada")
+      throw new Error("Conta não encontrada");
     }
 
     if (value < 0) {
@@ -155,7 +155,7 @@ class Account {
     })
 
     if (!validAccount) {
-      throw new Error("Chave pix não encontrada")
+      throw new Error("Chave pix não encontrada");
     }
 
     if (value < 0) {
