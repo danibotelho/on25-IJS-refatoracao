@@ -5,12 +5,10 @@ describe("Teste da classe premiumAccount", () => {
     const premiumAccount = new PremiumAccount();
     expect(premiumAccount instanceof PremiumAccount).toBe(true);
 
-    // remover da lista de instâncias
     premiumAccount.destroy();
 
   });
 
-  // positivo -> deposito com valor positivo
   test("deposito com valor de 100 reais", () => {
     const premiumAccount = new PremiumAccount();
     premiumAccount.createAccount('12345', '0001', 10000, 20000);
@@ -18,31 +16,26 @@ describe("Teste da classe premiumAccount", () => {
 
     expect(premiumAccount.balance).toBe(10100);
 
-    // remover da lista de instâncias
     premiumAccount.destroy();
 
   });
 
-  // negativo -> deposito com valor negativo
   test("deposito com valor de -100", () => {
     const premiumAccount = new PremiumAccount();
     premiumAccount.createAccount('12345', '0001', 10000, 20000);
     expect(() => premiumAccount.deposit(-100)).toThrow("Não é possível depositar valores negativos");
     expect(premiumAccount.balance).toBe(10000);
 
-    // remover da lista de instâncias
     premiumAccount.destroy();
 
   });
 
-  // negativo -> deposito com valor não numérico
   test("deposito com valor não númérico", () => {
     const premiumAccount = new PremiumAccount();
     premiumAccount.createAccount('12345', '0001', 10000, 20000);
     expect(() => premiumAccount.deposit("")).toThrow("Não é possível depositar valores não numéricos");
     expect(premiumAccount.balance).toBe(10000);
 
-    // remover da lista de instâncias
     premiumAccount.destroy();
 
   });
@@ -54,84 +47,67 @@ describe("Teste da classe premiumAccount", () => {
     expect(premiumAccount.accountNumber).toBe('12345');
     expect(premiumAccount.agency).toBe('0001');
 
-    // remover da lista de instâncias
     premiumAccount.destroy();
 
   });
 
-  // caso positivo -> dados válidos
   test("criar conta de com dados válidos e renda compatível", () => {
-    // numero conta (5 digitos) agencia (4 digitos) e saldo (numero positivo)
     const premiumAccount = new PremiumAccount();
     expect(premiumAccount.createAccount("12345", "0001", 500, 20000)).toBe("Conta criada com sucesso");
     expect(premiumAccount.balance).toBe(500);
     expect(premiumAccount.accountNumber).toBe('12345');
     expect(premiumAccount.agency).toBe('0001');
 
-    // remover da lista de instâncias
     premiumAccount.destroy();
 
   });
 
   test("criar conta de com dados válidos e renda incompatível", () => {
-    // numero conta (5 digitos) agencia (4 digitos) e saldo (numero positivo)
     const premiumAccount = new PremiumAccount();
     expect(() => premiumAccount.createAccount("12345", "0001", 500, 4000)).toThrow("Renda incompatível com o tipo de conta");
 
-    // remover da lista de instâncias
     premiumAccount.destroy();
 
   });
 
-
-  // caso negativo -> algum dado inválido
   test("criar conta com dados inválidos", () => {
     const premiumAccount = new PremiumAccount();
     expect(() => premiumAccount.createAccount("1234", "0001", 20000, 20000)).toThrow("Dados inválidos para cadastro");
 
-    // remover da lista de instâncias
     premiumAccount.destroy();
 
   });
 
-  // criar chave pix cpf
   test("criar chave pix cpf com sucesso", () => {
     const premiumAccount = new PremiumAccount();
     expect(premiumAccount.createPixKey("37761514046", "CPF")).toBe("Chave pix cpf criada com sucesso");
     expect(premiumAccount.pixKeys.cpf).toBe("37761514046");
 
-    // remover da lista de instâncias
     premiumAccount.destroy();
 
   });
 
-  // criar chave pix email
   test("criar chave pix email com sucesso", () => {
     const premiumAccount = new PremiumAccount();
     expect(premiumAccount.createPixKey("teste@reprograma.com.br", "EMAIL")).toBe("Chave pix email criada com sucesso");
     expect(premiumAccount.pixKeys.email).toBe("teste@reprograma.com.br");
 
-    // remover da lista de instâncias
     premiumAccount.destroy();
 
   });
 
-  // criar chave pix telefone
   test("criar chave pix telefone com sucesso", () => {
     const premiumAccount = new PremiumAccount();
     expect(premiumAccount.createPixKey("11912345678", "TELEFONE")).toBe("Chave pix telefone criada com sucesso");
 
-    // remover da lista de instâncias
     premiumAccount.destroy();
 
   });
 
-  // criar chave pix invalido
   test("criar chave pix cpf inválido", () => {
     const premiumAccount = new PremiumAccount();
     expect(() => premiumAccount.createPixKey("3776", "CPF")).toThrow("Erro, cpf inválido");
 
-    // remover da lista de instâncias
     premiumAccount.destroy();
 
   });
@@ -144,7 +120,6 @@ describe("Teste da classe premiumAccount", () => {
     premiumAccount.withdraw(100);
     expect(premiumAccount.balance).toBe(19900);
 
-    // remover da lista de instâncias
     premiumAccount.destroy();
 
   })
@@ -157,7 +132,6 @@ describe("Teste da classe premiumAccount", () => {
     expect(() => premiumAccount.withdraw(-100)).toThrow("Valor inválido de saque");
     expect(premiumAccount.balance).toBe(20000);
 
-    // remover da lista de instâncias
     premiumAccount.destroy();
   })
 
@@ -169,7 +143,6 @@ describe("Teste da classe premiumAccount", () => {
     expect(() => premiumAccount.withdraw('-100')).toThrow("Valor inválido de saque");
     expect(premiumAccount.balance).toBe(20000);
 
-    // remover da lista de instâncias
     premiumAccount.destroy();
   })
 
@@ -177,17 +150,14 @@ describe("Teste da classe premiumAccount", () => {
     const frompremiumAccount = new PremiumAccount();
     const topremiumAccount = new PremiumAccount();
 
-    // criar as contas
     frompremiumAccount.createAccount('12346', '0001', 10000, 20000);
     topremiumAccount.createAccount('12345', '0001', 20000, 20000);
 
-    //criar chave pix para a conta de destino
     topremiumAccount.createPixKey("teste@reprograma.com.br", "EMAIL");
     expect(frompremiumAccount.pix(100, 'teste@reprograma.com.br', 'email')).toBe("Pix feito com sucesso");
     expect(topremiumAccount.balance).toBe(20100);
     expect(frompremiumAccount.balance).toBe(9900);
 
-    // remover da lista de instâncias
     frompremiumAccount.destroy();
     topremiumAccount.destroy();
   })
@@ -196,17 +166,14 @@ describe("Teste da classe premiumAccount", () => {
     const frompremiumAccount = new PremiumAccount();
     const topremiumAccount = new PremiumAccount();
 
-    // criar as contas
     frompremiumAccount.createAccount('12346', '0001', 10000, 20000);
     topremiumAccount.createAccount('12345', '0001', 20000, 20000);
 
-    //criar chave pix para a conta de destino
     topremiumAccount.createPixKey("teste@reprograma.com.br", "EMAIL");
     expect(() => frompremiumAccount.pix(10, 'teste@admin.com.br', 'email')).toThrow("Chave pix não encontrada");
     expect(topremiumAccount.balance).toBe(20000);
     expect(frompremiumAccount.balance).toBe(10000);
 
-    // remover da lista de instâncias
     frompremiumAccount.destroy();
     topremiumAccount.destroy();
   })
@@ -215,17 +182,14 @@ describe("Teste da classe premiumAccount", () => {
     const frompremiumAccount = new PremiumAccount();
     const topremiumAccount = new PremiumAccount();
 
-    // criar as contas
     frompremiumAccount.createAccount('12346', '0001', 4000, 20000);
     topremiumAccount.createAccount('12345', '0001', 20000, 20000);
 
-    //criar chave pix para a conta de destino
     topremiumAccount.createPixKey("teste@reprograma.com.br", "EMAIL");
     expect(() => frompremiumAccount.pix(4100, 'teste@reprograma.com.br', 'email')).toThrow("Você não possui saldo suficiente");
     expect(topremiumAccount.balance).toBe(20000);
     expect(frompremiumAccount.balance).toBe(4000);
 
-    // remover da lista de instâncias
     frompremiumAccount.destroy();
     topremiumAccount.destroy();
   })
@@ -234,17 +198,14 @@ describe("Teste da classe premiumAccount", () => {
     const frompremiumAccount = new PremiumAccount();
     const topremiumAccount = new PremiumAccount();
 
-    // criar as contas
     frompremiumAccount.createAccount('12346', '0001', 10000, 20000);
     topremiumAccount.createAccount('12345', '0001', 20000, 20000);
 
-    //criar chave pix para a conta de destino
     topremiumAccount.createPixKey("teste@reprograma.com.br", "EMAIL");
     expect(() => frompremiumAccount.pix(-10, 'teste@reprograma.com.br', 'email')).toThrow("Valor inválido de pix");
     expect(topremiumAccount.balance).toBe(20000);
     expect(frompremiumAccount.balance).toBe(10000);
 
-    // remover da lista de instâncias
     frompremiumAccount.destroy();
     topremiumAccount.destroy();
   })
@@ -253,7 +214,6 @@ describe("Teste da classe premiumAccount", () => {
     const frompremiumAccount = new PremiumAccount();
     const topremiumAccount = new PremiumAccount();
 
-    // criar as contas
     frompremiumAccount.createAccount('12346', '0001', 7000, 20000);
     topremiumAccount.createAccount('12345', '0001', 20000, 20000);
 
@@ -261,7 +221,6 @@ describe("Teste da classe premiumAccount", () => {
     expect(frompremiumAccount.balance).toBe(6000);
     expect(topremiumAccount.balance).toBe(21000);
 
-    // remover da lista de instâncias
     frompremiumAccount.destroy();
     topremiumAccount.destroy();
   })
@@ -270,7 +229,6 @@ describe("Teste da classe premiumAccount", () => {
     const frompremiumAccount = new PremiumAccount();
     const topremiumAccount = new PremiumAccount();
 
-    // criar as contas
     frompremiumAccount.createAccount('12346', '0001', 7000, 20000);
     topremiumAccount.createAccount('12345', '0001', 20000, 20000);
 
@@ -278,7 +236,6 @@ describe("Teste da classe premiumAccount", () => {
     expect(topremiumAccount.balance).toBe(20000);
     expect(frompremiumAccount.balance).toBe(7000);
 
-    // remover da lista de instâncias
     frompremiumAccount.destroy();
     topremiumAccount.destroy();
   })
@@ -287,7 +244,6 @@ describe("Teste da classe premiumAccount", () => {
     const frompremiumAccount = new PremiumAccount();
     const topremiumAccount = new PremiumAccount();
 
-    // criar as contas
     frompremiumAccount.createAccount('12346', '0001', 4000, 20000);
     topremiumAccount.createAccount('12345', '0001', 20000, 20000);
 
@@ -295,7 +251,6 @@ describe("Teste da classe premiumAccount", () => {
     expect(topremiumAccount.balance).toBe(20000);
     expect(frompremiumAccount.balance).toBe(4000);
 
-    // remover da lista de instâncias
     frompremiumAccount.destroy();
     topremiumAccount.destroy();
   })
@@ -304,7 +259,6 @@ describe("Teste da classe premiumAccount", () => {
     const frompremiumAccount = new PremiumAccount();
     const topremiumAccount = new PremiumAccount();
 
-    // criar as contas
     frompremiumAccount.createAccount('12346', '0001', 10000, 20000);
     topremiumAccount.createAccount('12345', '0001', 20000, 20000);
 

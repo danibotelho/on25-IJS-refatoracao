@@ -12,7 +12,7 @@ class StandardAccount extends Account {
   createAccount(accountNumber, agency, balance, income) {
     const maxLimit = 4999
     if (income > maxLimit) {
-      throw new Error("Renda incompatível com o tipo de conta")
+      throw new Error("Renda incompatível com o tipo de conta");
     }
     if (accountNumber.length === 5 && agency.length === 4 && balance > 0) {
       this.accountNumber=accountNumber;
@@ -32,11 +32,11 @@ class StandardAccount extends Account {
     })
 
     if (!validAccount) {
-      throw new Error ("Conta não encontrada")
+      throw new Error ("Conta não encontrada");
     }
 
     if (value > this.transactionLimit) {
-      throw new Error ("O seu limite de transação é de 1000 reais")
+      throw new Error ("O seu limite de transação é de 1000 reais");
     }
 
     if (value < 0) {
@@ -58,11 +58,11 @@ class StandardAccount extends Account {
     })
   
     if (!validAccount) {
-      throw new Error ("Chave pix não encontrada")
+      throw new Error ("Chave pix não encontrada");
     }
 
     if (value > this.transactionLimit) {
-      throw new Error ("O seu limite de transação é de 1000 reais")
+      throw new Error ("O seu limite de transação é de 1000 reais");
     }
 
     if (value < 0) {

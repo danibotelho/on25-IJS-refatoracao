@@ -4,7 +4,7 @@ class Account {
   balance;
   pixKeys;
   income;
-  static all = []; // forma estática de manter tracking e todas as instâncias da classe Account
+  static all = []; 
 
   constructor(accountNumber, agency, balance) {
     this.accountNumber = accountNumber;
@@ -15,10 +15,9 @@ class Account {
       email: undefined,
       telefone: undefined
     }
-    Account.all.push(this); // a cada instância é adicionada a lista estática de all
+    Account.all.push(this); 
   }
 
-  // método para remover uma conta da lista e evitar que problemas de memória
   destroy() {
     let i = Account.all.indexOf(this);
     Account.all.splice(i, 1);
@@ -37,28 +36,29 @@ class Account {
 
   
   get balance() {
-    return this._balance;
+    return this.balance;
   }
 
   get agency() {
-    return this._agency;
+    return this.agency;
   }
 
   get accountNumber() {
-    return this._accountNumber;
+    return this.accountNumber;
   }
 
   set accountNumber(accountNumber) {
-    this._accountNumber = accountNumber;
+    this.accountNumber = accountNumber;
   }
 
   set agency(agency) {
-    this._agency = agency;
+    this.agency = agency;
   }
 
   set balance(value) {
-    this._balance += value;
+    this.balance += value;
   }
+
   deposit(value) {
     if (typeof value === 'string' || typeof value === 'boolean') {
       throw new Error("Não é possível depositar valores não numéricos");
@@ -73,9 +73,9 @@ class Account {
   createPixKey(keyValue, keyType) {
     switch (keyType) {
       case "CPF":
-        let regex = /([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})/;
+        let cpfRegex = /([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})/;
 
-        if (regex.test(keyValue)) {
+        if (cpfRegex.test(keyValue)) {
           this.pixKeys.cpf = keyValue;
           return "Chave pix cpf criada com sucesso";
         }
