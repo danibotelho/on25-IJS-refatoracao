@@ -26,8 +26,8 @@ class StandardAccount extends Account {
 
   transfer(value, accountNumber, agency) {
     const validAccount = Account.all.find(account => {
-      let accNumber = account.getAccountNumber();
-      let accAgency = account.getAgency();
+      let accNumber = account.accountNumber;
+      let accAgency = account.agency ;
       return accNumber === accountNumber && accAgency === agency; 
     })
 
@@ -44,7 +44,7 @@ class StandardAccount extends Account {
     }
 
     if (this.balance - value > 0) {
-      validAccount.setBalance(value);
+      validAccount.balance += value; 
       this.balance -= value;
       return "Transferência feita com sucesso";
     } else {
@@ -70,8 +70,8 @@ class StandardAccount extends Account {
     }
 
     if (this.balance - value > 0) {
+      validAccount.balance += value; 
       this.balance -= value;
-      validAccount.setBalance(value);
       return "Pix feito com sucesso";
     } else {
       throw new Error("Você não possui saldo suficiente");

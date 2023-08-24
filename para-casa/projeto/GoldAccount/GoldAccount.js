@@ -16,8 +16,8 @@ class GoldAccount extends Account {
       throw new Error("Renda incompatível com o tipo de conta")
     }
     if (accountNumber.length === 5 && agency.length === 4 && balance > 0) {
-      this.accountNumber=accountNumber;
-      this.agency=agency;
+      this.accountNumber= accountNumber;
+      this.agency= agency;
       this.balance = balance;
       this.income = income;
       return "Conta criada com sucesso";
@@ -28,8 +28,8 @@ class GoldAccount extends Account {
 
   transfer(value, accountNumber, agency) {
     const validAccount = Account.all.find(account => {
-      let accNumber = account.getAccountNumber();
-      let accAgency = account.getAgency();
+      let accNumber = account.accountNumber;
+      let accAgency = account.agency;
       return accNumber === accountNumber && accAgency === agency; 
     })
 
@@ -46,7 +46,7 @@ class GoldAccount extends Account {
     }
 
     if (this.balance - value > 0) {
-      validAccount.setBalance(value);
+      validAccount.balance += value; 
       this.balance -= value;
       return "Transferência feita com sucesso";
     } else {
@@ -72,8 +72,8 @@ class GoldAccount extends Account {
     }
 
     if (this.balance - value > 0) {
+      validAccount.balance += value; 
       this.balance -= value;
-      validAccount.setBalance(value);
       return "Pix feito com sucesso";
     } else {
       throw new Error("Você não possui saldo suficiente");

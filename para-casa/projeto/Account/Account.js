@@ -1,5 +1,4 @@
 class Account {
-  // removi o private dos atributos para lidar melhor com a herança já que o javascript não lida muito bem com protected
   accountNumber;
   agency;
   balance;
@@ -36,33 +35,30 @@ class Account {
     }
   }
 
-  getBalance() {
-    return this.balance;
+  
+  get balance() {
+    return this._balance;
   }
 
-  getAgency() {
-    return this.agency;
+  get agency() {
+    return this._agency;
   }
 
-  getAccountNumber() {
-    return this.accountNumber;
+  get accountNumber() {
+    return this._accountNumber;
   }
 
-  setAccountNumber(accountNumber) {
-    this.accountNumber = accountNumber
-    return this.accountNumber
+  set accountNumber(accountNumber) {
+    this._accountNumber = accountNumber;
   }
 
-  setAgency(agency) {
-    this.agency = agency
-    return this.agency
+  set agency(agency) {
+    this._agency = agency;
   }
 
-  setBalance(value) {
-    this.balance += value;
-    return this.balance;
+  set balance(value) {
+    this._balance += value;
   }
-
   deposit(value) {
     if (typeof value === 'string' || typeof value === 'boolean') {
       throw new Error("Não é possível depositar valores não numéricos");
@@ -127,8 +123,8 @@ class Account {
 
   transfer(value, accountNumber, agency) {
     const validAccount = Account.all.find(account => {
-      let accNumber = account.getAccountNumber();
-      let accAgency = account.getAgency();
+      let accNumber = account.accountNumber;
+      let accAgency = account.agency;
       return accNumber === accountNumber && accAgency === agency;
     })
 
@@ -141,7 +137,7 @@ class Account {
     }
 
     if (this.balance - value > 0) {
-      validAccount.setBalance(value);
+      validAccount.balance += value; 
       this.balance -= value;
       return "Transferência feita com sucesso";
     } else {
@@ -163,8 +159,8 @@ class Account {
     }
 
     if (this.balance - value > 0) {
+      validAccount.balance += value; 
       this.balance -= value;
-      validAccount.setBalance(value);
       return "Pix feito com sucesso";
     } else {
       throw new Error("Você não possui saldo suficiente");

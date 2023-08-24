@@ -15,7 +15,7 @@ describe("Teste da classe Account", () => {
     const account = new Account(1, 1, 1000);
     account.deposit(100);
 
-    expect(account.getBalance()).toBe(1100);
+    expect(account.balance).toBe(1100);
     
     // remover da lista de instâncias
     account.destroy();
@@ -26,7 +26,7 @@ describe("Teste da classe Account", () => {
   test("deposito com valor de -100", () => {
     const account = new Account(1, 1, 1000);
     expect(() => account.deposit(-100)).toThrow("Não é possível depositar valores negativos");
-    expect(account.getBalance()).toBe(1000);
+    expect(account.balance).toBe(1000);
     
     // remover da lista de instâncias
     account.destroy();
@@ -37,7 +37,7 @@ describe("Teste da classe Account", () => {
   test("deposito com valor não númérico", () => {
     const account = new Account(1, 1, 500);
     expect(() => account.deposit("")).toThrow("Não é possível depositar valores não numéricos");
-    expect(account.getBalance()).toBe(500);
+    expect(account.balance).toBe(500);
     
     // remover da lista de instâncias
     account.destroy();
@@ -46,9 +46,9 @@ describe("Teste da classe Account", () => {
 
   test("instaciar conta com valores válidos", () => {
     const account = new Account('12345', '0001', 1000);
-    expect(account.getBalance()).toBe(1000);
-    expect(account.getAccountNumber()).toBe('12345');
-    expect(account.getAgency()).toBe('0001');
+    expect(account.balance).toBe(1000);
+    expect(account.accountNumber ).toBe('12345');
+    expect(account.agency).toBe('0001');
     
     // remover da lista de instâncias
     account.destroy();
@@ -60,9 +60,9 @@ describe("Teste da classe Account", () => {
     // numero conta (5 digitos) agencia (4 digitos) e saldo (numero positivo)
     const account = new Account();
     expect(account.createAccount("12345", "0001", 500)).toBe("Conta criada com sucesso");
-    expect(account.getBalance()).toBe(500);
-    expect(account.getAccountNumber()).toBe('12345');
-    expect(account.getAgency()).toBe('0001');
+    expect(account.balance).toBe(500);
+    expect(account.accountNumber).toBe('12345');
+    expect(account.agency).toBe('0001');
     
     // remover da lista de instâncias
     account.destroy();
@@ -127,7 +127,7 @@ describe("Teste da classe Account", () => {
     account.createAccount('12346', '0001', 500);
 
     account.withdraw(100);
-    expect(account.getBalance()).toBe(400);
+    expect(account.balance).toBe(400);
     
     // remover da lista de instâncias
     account.destroy();
@@ -140,7 +140,7 @@ describe("Teste da classe Account", () => {
     account.createAccount('12346', '0001', 500);
 
     expect(() => account.withdraw(-100)).toThrow("Valor inválido de saque")
-    expect(account.getBalance()).toBe(500);
+    expect(account.balance).toBe(500);
     
     // remover da lista de instâncias
     account.destroy();
@@ -152,7 +152,7 @@ describe("Teste da classe Account", () => {
     account.createAccount('12346', '0001', 500);
 
     expect(() => account.withdraw('-100')).toThrow("Valor inválido de saque")
-    expect(account.getBalance()).toBe(500);
+    expect(account.balance).toBe(500);
 
     // remover da lista de instâncias
     account.destroy();
@@ -169,8 +169,8 @@ describe("Teste da classe Account", () => {
     //criar chave pix para a conta de destino
     toAccount.createPixKey("teste@reprograma.com.br", "EMAIL");
     expect(fromAccount.pix(10, 'teste@reprograma.com.br', 'email')).toBe("Pix feito com sucesso");
-    expect(toAccount.getBalance()).toBe(510);
-    expect(fromAccount.getBalance()).toBe(990);
+    expect(toAccount.balance).toBe(510);
+    expect(fromAccount.balance).toBe(990);
     
     // remover da lista de instâncias
     fromAccount.destroy();
@@ -188,8 +188,8 @@ describe("Teste da classe Account", () => {
     //criar chave pix para a conta de destino
     toAccount.createPixKey("teste@reprograma.com.br", "EMAIL");
     expect(() => fromAccount.pix(10, 'teste@admin.com.br', 'email')).toThrow("Chave pix não encontrada");
-    expect(toAccount.getBalance()).toBe(500);
-    expect(fromAccount.getBalance()).toBe(1000);
+    expect(toAccount.balance).toBe(500);
+    expect(fromAccount.balance).toBe(1000);
 
     // remover da lista de instâncias
     fromAccount.destroy();
@@ -207,8 +207,8 @@ describe("Teste da classe Account", () => {
     //criar chave pix para a conta de destino
     toAccount.createPixKey("teste@reprograma.com.br", "EMAIL");
     expect(() => fromAccount.pix(300, 'teste@reprograma.com.br', 'email')).toThrow("Você não possui saldo suficiente");
-    expect(toAccount.getBalance()).toBe(500);
-    expect(fromAccount.getBalance()).toBe(200);
+    expect(toAccount.balance).toBe(500);
+    expect(fromAccount.balance).toBe(200);
 
     // remover da lista de instâncias
     fromAccount.destroy();
@@ -226,8 +226,8 @@ describe("Teste da classe Account", () => {
     //criar chave pix para a conta de destino
     toAccount.createPixKey("teste@reprograma.com.br", "EMAIL");
     expect(() => fromAccount.pix(-10, 'teste@reprograma.com.br', 'email')).toThrow("Valor inválido de pix");
-    expect(toAccount.getBalance()).toBe(500);
-    expect(fromAccount.getBalance()).toBe(1000);
+    expect(toAccount.balance).toBe(500);
+    expect(fromAccount.balance).toBe(1000);
     
     // remover da lista de instâncias
     fromAccount.destroy();
@@ -243,8 +243,8 @@ describe("Teste da classe Account", () => {
     toAccount.createAccount('12345', '0001', 500);
 
     expect(fromAccount.transfer(10, '12345', '0001')).toBe("Transferência feita com sucesso");
-    expect(fromAccount.getBalance()).toBe(290);
-    expect(toAccount.getBalance()).toBe(510);
+    expect(fromAccount.balance).toBe(290);
+    expect(toAccount.balance).toBe(510);
     
     // remover da lista de instâncias
     fromAccount.destroy();
@@ -260,8 +260,8 @@ describe("Teste da classe Account", () => {
     toAccount.createAccount('12345', '0001', 500);
 
     expect(() => fromAccount.transfer(100, '12347', '0001')).toThrow("Conta não encontrada");
-    expect(toAccount.getBalance()).toBe(500);
-    expect(fromAccount.getBalance()).toBe(1000);
+    expect(toAccount.balance).toBe(500);
+    expect(fromAccount.balance).toBe(1000);
 
     // remover da lista de instâncias
     fromAccount.destroy();
@@ -277,8 +277,8 @@ describe("Teste da classe Account", () => {
     toAccount.createAccount('12345', '0001', 500);
 
     expect(() => fromAccount.transfer(300, '12345', '0001')).toThrow("Você não possui saldo suficiente");
-    expect(toAccount.getBalance()).toBe(500);
-    expect(fromAccount.getBalance()).toBe(200);
+    expect(toAccount.balance).toBe(500);
+    expect(fromAccount.balance).toBe(200);
 
     // remover da lista de instâncias
     fromAccount.destroy();
@@ -294,8 +294,8 @@ describe("Teste da classe Account", () => {
     toAccount.createAccount('12345', '0001', 500);
 
     expect(() => fromAccount.transfer(-100, '12345', '0001')).toThrow("Valor inválido de transferência");
-    expect(toAccount.getBalance()).toBe(500);
-    expect(fromAccount.getBalance()).toBe(1000);
+    expect(toAccount.balance).toBe(500);
+    expect(fromAccount.balance).toBe(1000);
 
     fromAccount.destroy();
     toAccount.destroy();

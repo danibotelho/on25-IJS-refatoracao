@@ -16,7 +16,7 @@ describe("Teste da classe GoldAccount", () => {
     goldAccount.createAccount('12345', '0001', 1000, 6000);
     goldAccount.deposit(100);
 
-    expect(goldAccount.getBalance()).toBe(1100);
+    expect(goldAccount.balance).toBe(1100);
     
     // remover da lista de instâncias
     goldAccount.destroy();
@@ -28,7 +28,7 @@ describe("Teste da classe GoldAccount", () => {
     const goldAccount = new GoldAccount();
     goldAccount.createAccount('12345', '0001', 1000, 6000);
     expect(() => goldAccount.deposit(-100)).toThrow("Não é possível depositar valores negativos");
-    expect(goldAccount.getBalance()).toBe(1000);
+    expect(goldAccount.balance).toBe(1000);
     
     // remover da lista de instâncias
     goldAccount.destroy();
@@ -39,7 +39,7 @@ describe("Teste da classe GoldAccount", () => {
     const goldAccount = new GoldAccount();
     goldAccount.createAccount('12345', '0001', 1000, 6000);
     expect(() => goldAccount.deposit("")).toThrow("Não é possível depositar valores não numéricos");
-    expect(goldAccount.getBalance()).toBe(1000);
+    expect(goldAccount.balance).toBe(1000);
     
     // remover da lista de instâncias
     goldAccount.destroy();
@@ -49,9 +49,9 @@ describe("Teste da classe GoldAccount", () => {
   test("instaciar conta com valores válidos", () => {
     const goldAccount = new GoldAccount();
     goldAccount.createAccount('12345', '0001', 1000, 6000);
-    expect(goldAccount.getBalance()).toBe(1000);
-    expect(goldAccount.getAccountNumber()).toBe('12345');
-    expect(goldAccount.getAgency()).toBe('0001');
+    expect(goldAccount.balance).toBe(1000);
+    expect(goldAccount.accountNumber).toBe('12345');
+    expect(goldAccount.agency).toBe('0001');
     
     // remover da lista de instâncias
     goldAccount.destroy();
@@ -63,9 +63,9 @@ describe("Teste da classe GoldAccount", () => {
     // numero conta (5 digitos) agencia (4 digitos) e saldo (numero positivo)
     const goldAccount = new GoldAccount();
     expect(goldAccount.createAccount("12345", "0001", 500, 6000)).toBe("Conta criada com sucesso");
-    expect(goldAccount.getBalance()).toBe(500);
-    expect(goldAccount.getAccountNumber()).toBe('12345');
-    expect(goldAccount.getAgency()).toBe('0001');
+    expect(goldAccount.balance).toBe(500);
+    expect(goldAccount.accountNumber).toBe('12345');
+    expect(goldAccount.agency).toBe('0001');
     
     // remover da lista de instâncias
     goldAccount.destroy();
@@ -141,7 +141,7 @@ describe("Teste da classe GoldAccount", () => {
     goldAccount.createAccount('12346', '0001', 6000, 7000);
 
     goldAccount.withdraw(100)
-    expect(goldAccount.getBalance()).toBe(5900);
+    expect(goldAccount.balance).toBe(5900);
     
     // remover da lista de instâncias
     goldAccount.destroy();
@@ -154,7 +154,7 @@ describe("Teste da classe GoldAccount", () => {
     goldAccount.createAccount('12346', '0001', 6000, 7000);
 
     expect(() => goldAccount.withdraw(-100)).toThrow("Valor inválido de saque");
-    expect(goldAccount.getBalance()).toBe(6000);
+    expect(goldAccount.balance).toBe(6000);
     
     // remover da lista de instâncias
     goldAccount.destroy();
@@ -166,7 +166,7 @@ describe("Teste da classe GoldAccount", () => {
     goldAccount.createAccount('12346', '0001', 6000, 7000);
 
     expect(() => goldAccount.withdraw('-100')).toThrow("Valor inválido de saque");
-    expect(goldAccount.getBalance()).toBe(6000);
+    expect(goldAccount.balance).toBe(6000);
 
     // remover da lista de instâncias
     goldAccount.destroy();
@@ -183,8 +183,8 @@ describe("Teste da classe GoldAccount", () => {
     //criar chave pix para a conta de destino
     togoldAccount.createPixKey("teste@reprograma.com.br", "EMAIL");
     expect(fromgoldAccount.pix(100, 'teste@reprograma.com.br', 'email')).toBe("Pix feito com sucesso");
-    expect(togoldAccount.getBalance()).toBe(6100);
-    expect(fromgoldAccount.getBalance()).toBe(900);
+    expect(togoldAccount.balance).toBe(6100);
+    expect(fromgoldAccount.balance).toBe(900);
     
     // remover da lista de instâncias
     fromgoldAccount.destroy();
@@ -202,8 +202,8 @@ describe("Teste da classe GoldAccount", () => {
     //criar chave pix para a conta de destino
     togoldAccount.createPixKey("teste@reprograma.com.br", "EMAIL");
     expect(() => fromgoldAccount.pix(5500, 'teste@reprograma.com.br', 'email')).toThrow("O seu limite de transação é de 1000 reais");
-    expect(togoldAccount.getBalance()).toBe(6000);
-    expect(fromgoldAccount.getBalance()).toBe(5500);
+    expect(togoldAccount.balance).toBe(6000);
+    expect(fromgoldAccount.balance).toBe(5500);
     
     // remover da lista de instâncias
     fromgoldAccount.destroy();
@@ -221,8 +221,8 @@ describe("Teste da classe GoldAccount", () => {
     //criar chave pix para a conta de destino
     togoldAccount.createPixKey("teste@reprograma.com.br", "EMAIL");
     expect(() => fromgoldAccount.pix(10, 'teste@admin.com.br', 'email')).toThrow("Chave pix não encontrada");
-    expect(togoldAccount.getBalance()).toBe(6000);
-    expect(fromgoldAccount.getBalance()).toBe(1000);
+    expect(togoldAccount.balance).toBe(6000);
+    expect(fromgoldAccount.balance).toBe(1000);
 
     // remover da lista de instâncias
     fromgoldAccount.destroy();
@@ -240,8 +240,8 @@ describe("Teste da classe GoldAccount", () => {
     //criar chave pix para a conta de destino
     togoldAccount.createPixKey("teste@reprograma.com.br", "EMAIL");
     expect(() => fromgoldAccount.pix(4100, 'teste@reprograma.com.br', 'email')).toThrow("Você não possui saldo suficiente");
-    expect(togoldAccount.getBalance()).toBe(6000);
-    expect(fromgoldAccount.getBalance()).toBe(4000);
+    expect(togoldAccount.balance).toBe(6000);
+    expect(fromgoldAccount.balance).toBe(4000);
 
     // remover da lista de instâncias
     fromgoldAccount.destroy();
@@ -259,8 +259,8 @@ describe("Teste da classe GoldAccount", () => {
     //criar chave pix para a conta de destino
     togoldAccount.createPixKey("teste@reprograma.com.br", "EMAIL");
     expect(() => fromgoldAccount.pix(-10, 'teste@reprograma.com.br', 'email')).toThrow("Valor inválido de pix");
-    expect(togoldAccount.getBalance()).toBe(6000);
-    expect(fromgoldAccount.getBalance()).toBe(1000);
+    expect(togoldAccount.balance).toBe(6000);
+    expect(fromgoldAccount.balance).toBe(1000);
     
     // remover da lista de instâncias
     fromgoldAccount.destroy();
@@ -276,8 +276,8 @@ describe("Teste da classe GoldAccount", () => {
     togoldAccount.createAccount('12345', '0001', 6000, 7000);
 
     expect(fromgoldAccount.transfer(100, '12345', '0001')).toBe("Transferência feita com sucesso");
-    expect(fromgoldAccount.getBalance()).toBe(6900);
-    expect(togoldAccount.getBalance()).toBe(6100);
+    expect(fromgoldAccount.balance).toBe(6900);
+    expect(togoldAccount.balance).toBe(6100);
     
     // remover da lista de instâncias
     fromgoldAccount.destroy();
@@ -293,8 +293,8 @@ describe("Teste da classe GoldAccount", () => {
     togoldAccount.createAccount('12345', '0001', 6000, 7000);
 
     expect(() => fromgoldAccount.transfer(100, '12347', '0001')).toThrow("Conta não encontrada");
-    expect(togoldAccount.getBalance()).toBe(6000);
-    expect(fromgoldAccount.getBalance()).toBe(7000);
+    expect(togoldAccount.balance).toBe(6000);
+    expect(fromgoldAccount.balance).toBe(7000);
 
     // remover da lista de instâncias
     fromgoldAccount.destroy();
@@ -310,8 +310,8 @@ describe("Teste da classe GoldAccount", () => {
     togoldAccount.createAccount('12345', '0001', 6000, 7000);
 
     expect(() => fromgoldAccount.transfer(6000, '12345', '0001')).toThrow("O seu limite de transação é de 1000 reais");
-    expect(togoldAccount.getBalance()).toBe(6000);
-    expect(fromgoldAccount.getBalance()).toBe(7000);
+    expect(togoldAccount.balance).toBe(6000);
+    expect(fromgoldAccount.balance).toBe(7000);
 
     // remover da lista de instâncias
     fromgoldAccount.destroy();
@@ -327,8 +327,8 @@ describe("Teste da classe GoldAccount", () => {
     togoldAccount.createAccount('12345', '0001', 6000, 7000);
 
     expect(() => fromgoldAccount.transfer(4500, '12345', '0001')).toThrow("Você não possui saldo suficiente");
-    expect(togoldAccount.getBalance()).toBe(6000);
-    expect(fromgoldAccount.getBalance()).toBe(4000);
+    expect(togoldAccount.balance).toBe(6000);
+    expect(fromgoldAccount.balance).toBe(4000);
 
     // remover da lista de instâncias
     fromgoldAccount.destroy();
@@ -344,8 +344,8 @@ describe("Teste da classe GoldAccount", () => {
     togoldAccount.createAccount('12345', '0001', 6000, 7000);
 
     expect(() => fromgoldAccount.transfer(-100, '12345', '0001')).toThrow("Valor inválido de transferência");
-    expect(togoldAccount.getBalance()).toBe(6000);
-    expect(fromgoldAccount.getBalance()).toBe(1000);
+    expect(togoldAccount.balance).toBe(6000);
+    expect(fromgoldAccount.balance).toBe(1000);
 
     fromgoldAccount.destroy();
     togoldAccount.destroy();
